@@ -15,8 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('travel_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->timestamp('starting_at');
-            $table->timestamp('ending_at');
+            $table->date('starting_at');
+            $table->date('ending_at');
             $table->integer('price');
             $table->timestamps();
         });
