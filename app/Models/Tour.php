@@ -20,8 +20,8 @@ class Tour extends Model
     ];
 
     protected $casts = [
-        'starting_at' => 'timestamp',
-        'ending_at' => 'timestamp',
+        'starting_at' => 'date',
+        'ending_at' => 'date',
     ];
 
     public function price(): Attribute
