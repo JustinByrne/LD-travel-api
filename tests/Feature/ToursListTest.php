@@ -3,6 +3,7 @@
 use App\Models\Tour;
 use App\Models\Travel;
 use function Pest\Laravel\get;
+use function Pest\Laravel\getJson;
 
 beforeEach(function () {
     $this->travel = Travel::factory()->create();
@@ -251,7 +252,7 @@ it('returns a list of tours that are filtered by date', function () {
 it('returns a 422 error code when passing incorrect formats in the query string', function ($parameters) {
     $parameters['travel'] = $this->travel;
 
-    get(route('api.v1.tours', $parameters))
+    getJson(route('api.v1.tours', $parameters))
         ->assertUnprocessable();
 })->with([
     'incorrect date from format' => [
