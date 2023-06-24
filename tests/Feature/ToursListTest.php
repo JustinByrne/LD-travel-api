@@ -16,9 +16,7 @@ it('returns a list of tours from a travel based on slug', function () {
     get(route('api.v1.tours', $this->travel))
         ->assertOk()
         ->assertJsonCount(1, 'data')
-        ->assertJsonFragment([
-            'id' => $tour->id,
-        ]);
+        ->assertJsonFragment(['id' => $tour->id]);
 });
 
 it('returns a tour with the correct pricing', function () {
@@ -30,9 +28,7 @@ it('returns a tour with the correct pricing', function () {
     get(route('api.v1.tours', $this->travel))
         ->assertOk()
         ->assertJsonCount(1, 'data')
-        ->assertJsonFragment([
-            'price' => '123.45',
-        ]);
+        ->assertJsonFragment(['price' => '123.45']);
 });
 
 it('returns tours in a paginated list', function () {
