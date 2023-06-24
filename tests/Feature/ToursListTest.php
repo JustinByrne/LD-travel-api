@@ -185,7 +185,7 @@ it('returns a list of tours that are filtered by date', function () {
 
     get(route('api.v1.tours', [
         'travel' => $this->travel,
-        'dateFrom' => now(),
+        'dateFrom' => now()->format('Y-m-d'),
     ]))
         ->assertOk()
         ->assertJsonCount(2, 'data')
@@ -194,7 +194,7 @@ it('returns a list of tours that are filtered by date', function () {
 
     get(route('api.v1.tours', [
         'travel' => $this->travel,
-        'dateFrom' => now()->addDay(),
+        'dateFrom' => now()->addDay()->format('Y-m-d'),
     ]))
         ->assertOk()
         ->assertJsonCount(1, 'data')
@@ -203,7 +203,7 @@ it('returns a list of tours that are filtered by date', function () {
 
     get(route('api.v1.tours', [
         'travel' => $this->travel,
-        'dateFrom' => now()->addDays(5),
+        'dateFrom' => now()->addDays(5)->format('Y-m-d'),
     ]))
         ->assertOk()
         ->assertJsonCount(0, 'data')
@@ -212,7 +212,7 @@ it('returns a list of tours that are filtered by date', function () {
 
     get(route('api.v1.tours', [
         'travel' => $this->travel,
-        'dateTo' => now()->addDays(5),
+        'dateTo' => now()->addDays(5)->format('Y-m-d'),
     ]))
         ->assertOk()
         ->assertJsonCount(2, 'data')
@@ -221,7 +221,7 @@ it('returns a list of tours that are filtered by date', function () {
 
     get(route('api.v1.tours', [
         'travel' => $this->travel,
-        'dateTo' => now()->addDay(),
+        'dateTo' => now()->addDay()->format('Y-m-d'),
     ]))
         ->assertOk()
         ->assertJsonCount(1, 'data')
@@ -230,7 +230,7 @@ it('returns a list of tours that are filtered by date', function () {
 
     get(route('api.v1.tours', [
         'travel' => $this->travel,
-        'dateTo' => now()->subDay(),
+        'dateTo' => now()->subDay()->format('Y-m-d'),
     ]))
         ->assertOk()
         ->assertJsonCount(0, 'data')
@@ -239,8 +239,8 @@ it('returns a list of tours that are filtered by date', function () {
 
     get(route('api.v1.tours', [
         'travel' => $this->travel,
-        'dateFrom' => now()->addDay(),
-        'dateTo' => now()->addDays(5),
+        'dateFrom' => now()->addDay()->format('Y-m-d'),
+        'dateTo' => now()->addDays(5)->format('Y-m-d'),
     ]))
         ->assertOk()
         ->assertJsonCount(1, 'data')
