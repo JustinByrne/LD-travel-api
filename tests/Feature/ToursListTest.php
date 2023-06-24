@@ -4,7 +4,7 @@ use App\Models\Tour;
 use App\Models\Travel;
 use function Pest\Laravel\get;
 
-beforeAll(function () {
+beforeEach(function () {
     $this->travel = Travel::factory()->create();
 });
 
@@ -40,7 +40,7 @@ it('returns tours in a paginated list', function () {
         'travel_id' => $this->travel->id,
     ]);
 
-    get(route('api.va.tours', $this->travel))
+    get(route('api.v1.tours', $this->travel))
         ->assertOk()
         ->assertJsonCount(15, 'data')
         ->assertJsonPath('meta.last_page', 2);
