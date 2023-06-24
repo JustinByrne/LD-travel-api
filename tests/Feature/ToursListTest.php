@@ -275,4 +275,14 @@ it('returns a 422 error code when passing incorrect formats in the query string'
             'priceTo' => 'not a integer',
         ],
     ],
+    'incorrect sort by column' => [
+        [
+            'sortBy' => 'not this column',
+        ],
+    ],
+    'incorrect sort order' => [
+        [
+            'sortOrder' => 'not a direction',
+        ],
+    ],
 ]);
