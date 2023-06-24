@@ -247,3 +247,31 @@ it('returns a list of tours that are filtered by date', function () {
         ->assertJsonMissing(['id' => $currentTour->id])
         ->assertJsonFragment(['id' => $futureTour->id]);
 });
+
+it('returns a 422 error code when passing incorrect formats in the query string', function ($parameters) {
+    $parameters['travel'] = $this->travel;
+
+    get(route('api.v1.tours', $parameters))
+        ->assertUnprocessable();
+})->with([
+    'incorrect date from format' => [
+        [
+            'dateFrom' => 'not a date format',
+        ],
+    ],
+    'incorrect date to format' => [
+        [
+            'dateTo' => 'not a date format',
+        ],
+    ],
+    'incorrect price from format' => [
+        [
+            'priceFrom' => 'not a integer',
+        ],
+    ],
+    'incorrect price to format' => [
+        [
+            'priceTo' => 'not a integer',
+        ],
+    ],
+]);
