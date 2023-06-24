@@ -93,3 +93,157 @@ it('returns tour in specified order when sort query strings in the url', functio
         ->assertJsonPath('data.1.id', $cheapFutureTour->id)
         ->assertJsonPath('data.2.id', $expensiveTour->id);
 });
+
+it('returns a list of tours that are filtered by price', function () {
+    $cheapTour = Tour::factory()->create([
+        'travel_id' => $this->travel->id,
+        'price' => 100,
+    ]);
+
+    $expensiveTour = Tour::factory()->create([
+        'travel_id' => $this->travel->id,
+        'price' => 200,
+    ]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'priceFrom' => 100,
+    ]))
+        ->assertOk()
+        ->assertJsonCount(2, 'data')
+        ->assertJsonFragment(['id' => $cheapTour->id])
+        ->assertJsonFragment(['id' => $expensiveTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'priceFrom' => 150,
+    ]))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonMissing(['id' => $cheapTour->id])
+        ->assertJsonFragment(['id' => $expensiveTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'priceFrom' => 250,
+    ]))
+        ->assertOk()
+        ->assertJsonCount(0, 'data')
+        ->assertJsonMissing(['id' => $cheapTour->id])
+        ->assertJsonMissing(['id' => $expensiveTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'priceTo' => 200,
+    ]))
+        ->assertOk()
+        ->assertJsonCount(2, 'data')
+        ->assertJsonFragment(['id' => $cheapTour->id])
+        ->assertJsonFragment(['id' => $expensiveTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'priceTo' => 150,
+    ]))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonFragment(['id' => $cheapTour->id])
+        ->assertJsonMissing(['id' => $expensiveTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'priceTo' => 50,
+    ]))
+        ->assertOk()
+        ->assertJsonCount(0, 'data')
+        ->assertJsonMissing(['id' => $cheapTour->id])
+        ->assertJsonMissing(['id' => $expensiveTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'priceFrom' => 150,
+        'priceTo' => 250,
+    ]))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonMissing(['id' => $cheapTour->id])
+        ->assertJsonFragment(['id' => $expensiveTour->id]);
+});
+
+it('returns a list of tours that are filtered by date', function () {
+    $currentTour = Tour::factory()->create([
+        'travel_id' => $this->travel->id,
+        'starting_at' => now(),
+        'ending_at' => now()->addDay(),
+    ]);
+
+    $futureTour = Tour::factory()->create([
+        'travel_id' => $this->travel->id,
+        'starting_at' => now()->addDays(2),
+        'ending_at' => now()->addDays(3),
+    ]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'dateFrom' => now(),
+    ]))
+        ->assertOk()
+        ->assertJsonCount(2, 'data')
+        ->assertJsonFragment(['id' => $currentTour->id])
+        ->assertJsonFragment(['id' => $futureTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'dateFrom' => now()->addDay(),
+    ]))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonMissing(['id' => $currentTour->id])
+        ->assertJsonFragment(['id' => $futureTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'dateFrom' => now()->addDays(5),
+    ]))
+        ->assertOk()
+        ->assertJsonCount(0, 'data')
+        ->assertJsonMissing(['id' => $currentTour->id])
+        ->assertJsonMissing(['id' => $futureTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'dateTo' => now()->addDays(5),
+    ]))
+        ->assertOk()
+        ->assertJsonCount(2, 'data')
+        ->assertJsonFragment(['id' => $currentTour->id])
+        ->assertJsonFragment(['id' => $futureTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'dateTo' => now()->addDay(),
+    ]))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonFragment(['id' => $currentTour->id])
+        ->assertJsonMissing(['id' => $futureTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'dateTo' => now()->subDay(),
+    ]))
+        ->assertOk()
+        ->assertJsonCount(0, 'data')
+        ->assertJsonMissing(['id' => $currentTour->id])
+        ->assertJsonMissing(['id' => $futureTour->id]);
+
+    get(route('api.v1.tours', [
+        'travel' => $this->travel,
+        'dateFrom' => now()->addDay(),
+        'dateTo' => now()->addDays(5),
+    ]))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonMissing(['id' => $currentTour->id])
+        ->assertJsonFragment(['id' => $futureTour->id]);
+});
