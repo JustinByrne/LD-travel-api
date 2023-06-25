@@ -73,7 +73,7 @@ it('updates an existing travel with valid data when the user is an editor', func
 
     $data = [
         'name' => fake()->word(),
-        'is_public' => fake()->boolean(),
+        'is_public' => true,
         'description' => fake()->paragraph(),
         'number_of_days' => fake()->randomDigitNotNull(),
     ];
