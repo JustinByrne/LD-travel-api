@@ -39,7 +39,7 @@ it('creates a new tour with valid data', function () {
         'name' => fake()->word(),
         'starting_at' => now()->toDateString(),
         'ending_at' => now()->addDay()->toDateString(),
-        'price' => fake()->randomFloat(2),
+        'price' => fake()->randomFloat(2, 1, 30),
     ];
 
     actingAs($this->user)
