@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Admin\TourController as AdminTourController;
 use App\Http\Controllers\Api\V1\Admin\TravelController as AdminTravelController;
 use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\V1\TourController;
@@ -16,7 +17,8 @@ Route::prefix('admin')
         'role:admin',
     ])
     ->group(function () {
-        Route::post('travels', [AdminTravelController::class, 'store'])->name('travels.store');
+        Route::post('/travels', [AdminTravelController::class, 'store'])->name('travels.store');
+        Route::post('/travels/{travel:slug}/tours', [AdminTourController::class, 'store'])->name('tours.store');
     });
 
 Route::post('login', LoginController::class)->name('login');
