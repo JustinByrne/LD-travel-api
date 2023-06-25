@@ -7,8 +7,21 @@ use App\Http\Requests\TourRequest;
 use App\Http\Resources\TourResource;
 use App\Models\Travel;
 
+/**
+ * @group Admin endpoints
+ */
 class TourController extends Controller
 {
+    /**
+     * POST Tour
+     *
+     * Creates a new Tour record.
+     *
+     * @authenticated
+     *
+     * @response {"data":{"id":"996a36ca-2693-4901-9c55-7136e68d81d5","name":"My new tour 234", ...}
+     * @response 422 {"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}
+     */
     public function store(Travel $travel, TourRequest $request)
     {
         $tour = $travel->tours()->create($request->validated());
