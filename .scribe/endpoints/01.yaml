@@ -1,0 +1,241 @@
+name: 'Admin endpoints'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/v1/admin/travels
+    metadata:
+      groupName: 'Admin endpoints'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'POST Travel'
+      description: 'Creates a new Travel record.'
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      is_public:
+        name: is_public
+        description: ''
+        required: false
+        example: false
+        type: boolean
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: true
+        example: nemo
+        type: string
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: true
+        example: odio
+        type: string
+        custom: []
+      number_of_days:
+        name: number_of_days
+        description: ''
+        required: true
+        example: 16
+        type: integer
+        custom: []
+    cleanBodyParameters:
+      is_public: false
+      name: nemo
+      description: odio
+      number_of_days: 16
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":"996a36ca-2693-4901-9c55-7136e68d81d5","name":"My new travel 234","slug":"my-new-travel-234", ...}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 422
+        content: '{"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/v1/admin/travels/{travel_slug}/tours'
+    metadata:
+      groupName: 'Admin endpoints'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'POST Tour'
+      description: 'Creates a new Tour record.'
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      travel_slug:
+        name: travel_slug
+        description: 'The slug of the travel.'
+        required: true
+        example: 997d7453-0dae-499c-a70a-6eb46007a054
+        type: string
+        custom: []
+    cleanUrlParameters:
+      travel_slug: 997d7453-0dae-499c-a70a-6eb46007a054
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: voluptatem
+        type: string
+        custom: []
+      starting_at:
+        name: starting_at
+        description: 'Must be a valid date.'
+        required: true
+        example: '2023-06-25T15:01:53'
+        type: string
+        custom: []
+      ending_at:
+        name: ending_at
+        description: 'Must be a valid date. Must be a date after <code>starting_at</code>.'
+        required: true
+        example: '2075-04-27'
+        type: string
+        custom: []
+      price:
+        name: price
+        description: ''
+        required: true
+        example: 351673.26866832
+        type: number
+        custom: []
+    cleanBodyParameters:
+      name: voluptatem
+      starting_at: '2023-06-25T15:01:53'
+      ending_at: '2075-04-27'
+      price: 351673.26866832
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":"996a36ca-2693-4901-9c55-7136e68d81d5","name":"My new tour 234", ...}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 422
+        content: '{"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/v1/admin/travels/{slug}'
+    metadata:
+      groupName: 'Admin endpoints'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'PUT Travel'
+      description: 'Updates new Travel record.'
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      slug:
+        name: slug
+        description: 'The slug of the travel.'
+        required: true
+        example: 997d7453-0dae-499c-a70a-6eb46007a054
+        type: string
+        custom: []
+    cleanUrlParameters:
+      slug: 997d7453-0dae-499c-a70a-6eb46007a054
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      is_public:
+        name: is_public
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: true
+        example: sit
+        type: string
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: true
+        example: sapiente
+        type: string
+        custom: []
+      number_of_days:
+        name: number_of_days
+        description: ''
+        required: true
+        example: 10
+        type: integer
+        custom: []
+    cleanBodyParameters:
+      is_public: true
+      name: sit
+      description: sapiente
+      number_of_days: 10
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":"996a36ca-2693-4901-9c55-7136e68d81d5","name":"My new travel 234", ...}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 422
+        content: '{"message":"The name has already been taken.","errors":{"name":["The name has already been taken."]}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
