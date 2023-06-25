@@ -1,0 +1,17 @@
+name: run-larastan
+
+on: [push]
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: analyse code
+        run: |
+          vendor/bin/phpstan analyse
