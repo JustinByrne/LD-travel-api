@@ -13,12 +13,12 @@ beforeEach(function () {
     $this->user = User::factory()->create();
 });
 
-it('returns a 401 error when an unauthenticated user accesses the admin travels', function () {
+it('returns a 401 error when an unauthenticated user attempt to create a new travel', function () {
     postJson(route('api.v1.admin.travels.store'))
         ->assertUnauthorized();
 });
 
-it('returns a 403 error when an unauthorised user accessed the admin travels', function () {
+it('returns a 403 error when an unauthorised user attempt to create a new travel', function () {
     $this->user->roles()->attach(Role::where('name', 'editor')->value('id'));
 
     actingAs($this->user)
